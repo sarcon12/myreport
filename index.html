@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BCP & Project Management Presentation</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans&display=swap" rel="stylesheet">
+
+<style>
+body { margin: 0; font-family: "Open Sans", Arial, sans-serif; overflow: hidden; }
+.slide { display: none; height: 100vh; width: 100vw; padding: 60px 80px; box-sizing: border-box; text-align: center; background-size: cover; background-position: center; position: relative; color: #fff; }
+.slide::before { content: ""; position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); z-index: 1; }
+.slide.active { display: flex; flex-direction: column; justify-content: center; align-items: center; }
+h1, p { position: relative; z-index: 2; max-width: 1000px; text-shadow: 2px 2px 8px rgba(0,0,0,0.8); }
+.typing span { display: block; overflow: hidden; border-right: 4px solid #ffd966; white-space: nowrap; width: 0; margin-bottom: 20px; }
+@keyframes typing { to { width: 100% } }
+@keyframes blink { 50% { border-color: transparent } }
+h1 { font-family: "Montserrat", sans-serif; font-size: 4rem; margin-bottom: 30px; color: #ffd966; }
+p { font-size: 50px; line-height: 2.2; color: whitesmoke; font-family: 'Courier New', Courier, monospace, cursive; font-weight: bold; font-style: italic; }
+nav { position: fixed; bottom: 20px; width: 100%; text-align: center; z-index: 3; }
+button { background: #ffd966; color: #0d1a26; border: none; padding: 16px 32px; margin: 0 15px; font-size: 1.5rem; border-radius: 30px; cursor: pointer; transition: background 0.3s, transform 0.2s; }
+button:hover { background: #fff2a8; transform: scale(1.05); }
+</style>
+</head>
+<body>
+
+<!-- Slides -->
+<div class="slide active"><h1></h1><p></p></div>
+<div class="slide"><h1></h1><p></p></div>
+<div class="slide"><h1></h1><p></p></div>
+<div class="slide"><h1></h1><p></p></div>
+<div class="slide"><h1></h1><p></p></div>
+<div class="slide"><h1></h1><p></p></div>
+<div class="slide"><h1></h1><p></p></div>
+<div class="slide"><h1></h1><p></p></div>
+<div class="slide"><h1></h1><p></p></div>
+<div class="slide"><h1></h1><p></p></div>
+<div class="slide"><h1></h1><p></p></div>
+<div class="slide"><h1></h1><p></p></div>
+<div class="slide"><h1></h1><p></p></div>
+<div class="slide"><h1></h1><p></p></div> <!-- Final slide -->
+
+<!-- Navigation -->
+<nav>
+  <button onclick="prevSlide()">Previous</button>
+  <button onclick="nextSlide()">Next</button>
+</nav>
+
+<script>
+const slidesData = [
+  {bg:'1.png', h: "Business Continuity Planning", p: ["BCP keeps a company running during big problems.","These six steps show how to stay ready and recover fast."]},
+  {bg:'2.png', h:"1. Check the Risks", p:["Find threats—storms, fires, cyber attacks—and see which are most serious."]},
+  {bg:'3.png', h:"2. Study the Impact", p:["See how each threat affects money, customers, and work.","Decide how long you can be down and how much data you can lose."]},
+  {bg:'4.png', h:"3. Make a Strategy", p:["Plan how to keep working: backups, alternate offices, and emergency contacts."]},
+  {bg:'5.png', h:"4. Write the Plan", p:["Write clear steps, contacts, and roles so everyone knows what to do."]},
+  {bg:'6.png', h:"5. Train and Test", p:["Practice with the team. Run drills and fix weak spots."]},
+  {bg:'7.png', h:"6. Keep Improving", p:["After tests or real events, update the plan so it stays current."]},
+  {bg:'8.png', h:"Project Management & Initiation", p:["Starting a project the right way helps everyone agree on goals and steps."]},
+  {bg:'9.png', h:"1. Idea and Check", p:["Think of the project idea and check if it is possible, valuable, and fits company goals."]},
+  {bg:'10.png', h:"2. Project Charter", p:["Write a short paper explaining what the project will deliver, how long it will take, and the budget."]},
+  {bg:'11.png', h:"3. Find Stakeholders", p:["List everyone who cares—team, managers, customers—and plan how to keep them informed."]},
+  {bg:'12.png', h:"4. Plan Resources", p:["Decide what people, tools, and money are needed and assign clear roles."]},
+  {bg:'13.png', h:"5. Approval & Kick-off", p:["Get official approval, then hold a start meeting so the whole team understands the plan."]},
+  {bg:'11.png', h:"Thank You!", p:["Thank you for listening.", "We appreciate your time and attention."]}
+];
+
+let current = 0;
+const slides = document.querySelectorAll('.slide');
+
+function showSlide(i){
+  slides[current].classList.remove('active');
+  current = (i + slides.length) % slides.length;
+  slides[current].classList.add('active');
+
+  const h1 = slides[current].querySelector('h1');
+  const p = slides[current].querySelector('p');
+
+  h1.innerHTML = '';
+  p.innerHTML = '';
+
+  slides[current].style.backgroundImage = `url('${slidesData[current].bg}')`;
+
+  let delay = 0;
+
+  // Heading typing animation
+  slidesData[current].h.split('\n').forEach(line => {
+    const span = document.createElement('span');
+    span.textContent = line;
+    span.classList.add('typing');
+    span.style.animation = `typing 5s steps(40,end) forwards, blink 0.7s step-end infinite`;
+    span.style.animationDelay = `${delay}s`;
+    span.addEventListener('animationend', () => span.style.borderRight = 'none'); // cursor disappears
+    h1.appendChild(span);
+    delay += 5; // wait for heading line to finish
+  });
+
+  // Paragraph typing animation sequentially
+  slidesData[current].p.forEach(line => {
+    const span = document.createElement('span');
+    span.textContent = line;
+    span.classList.add('typing');
+    span.style.animation = `typing 5s steps(40,end) forwards, blink 0.7s step-end infinite`;
+    span.style.animationDelay = `${delay}s`;
+    span.addEventListener('animationend', () => span.style.borderRight = 'none'); // cursor disappears
+    p.appendChild(span);
+    delay += 5; // wait for each paragraph line
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => showSlide(0));
+
+function nextSlide(){ showSlide(current + 1); }
+function prevSlide(){ showSlide(current - 1); }
+
+document.addEventListener('keydown', e => {
+  if(e.key === 'ArrowRight') nextSlide();
+  if(e.key === 'ArrowLeft') prevSlide();
+});
+</script>
+</body>
+</html>
